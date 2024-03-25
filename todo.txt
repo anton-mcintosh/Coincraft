@@ -1,0 +1,9 @@
+1. Connect to coingecko api
+2. Get user input and display data
+3. Create routine to calculate MACD
+  a. Calculate the short term EMA
+  b. Calculate the long term EMA
+  c. Calculate the MACD line
+4. Create routine to calculate Signal Line
+5. Trigger buy/sell signals based on MACD and Signal Line
+
