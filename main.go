@@ -12,6 +12,7 @@ type Money struct {
   Coins float64
   Buys int
   Sells int
+  Price float64
 }
 
 type CoinResponse struct {
@@ -29,7 +30,7 @@ func extractPrices (data CoinResponse) []float64 {
 }
 func main() {
 
-  money := Money{1000, 0, 0, 0}
+  money := Money{1000, 0, 0, 0, 0}
 
   var coin string
   var strategy string
@@ -41,7 +42,7 @@ func main() {
   fmt.Scanln(&strategy)
   fmt.Println("Specify a trade fee")
   fmt.Scanln(&trade_fee)
-  url := "https://api.coingecko.com/api/v3/coins/" + coin + "/market_chart?vs_currency=usd&days=365"
+  url := "https://api.coingecko.com/api/v3/coins/" + coin + "/market_chart?vs_currency=usd&days=180"
 	req, _ := http.NewRequest("GET", url, nil)
 
 	res, _ := http.DefaultClient.Do(req)
@@ -55,5 +56,13 @@ func main() {
     if macd[i] > signal[i] {
       money.buy(1, prices[i])
     }
+    if macd[i] < signal[i] {
+      money.sell(1, prices[i])
+    }
+    money.Price = prices[i]
   }
+  money.sellAll(money.Price)
+  fmt.Printf("Final balance: $%.2f\n", money.Dollars)
+  println(money.Buys)
+  println(money.Sells)
 }

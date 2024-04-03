@@ -11,3 +11,9 @@ func (s *Money) sell (quantity int, price float64) {
   s.Coins -= float64(quantity)
   s.Sells++
 }
+
+func (s *Money) sellAll (price float64) {
+  s.Dollars += s.Coins * price
+  s.Coins = 0
+  s.Sells++
+}
